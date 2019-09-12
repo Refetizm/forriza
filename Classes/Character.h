@@ -8,14 +8,16 @@ class Character
 public:
 	Character(cocos2d::Layer* layer);
 	void Fall();
-	void Fly() { isFalling = false; }
-	void StopFlying() { isFalling = true; }
+	void Fly() { isFalling = false;}
+	void StopFlying() { isFalling = true;}
 
 private:
 	cocos2d::Sprite* mainChar;
 	cocos2d::Size visibleSize;
 	cocos2d::Vec2 origin;
 	bool isFalling;
+
+	cocos2d::SpriteBatchNode* charBatchNode;
 
 	
 	

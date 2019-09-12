@@ -1,14 +1,10 @@
 #include "GameScene.h"
+#include "GameOverScene.h"
 #include "Definitions.h"
 #include "SimpleAudioEngine.h"
 
 
 USING_NS_CC;
-
-enum
-{
-	kTagTileMap = 1,
-};
 
 
 Scene* GameScene::createScene()
@@ -44,7 +40,7 @@ bool GameScene::init()
 
 	auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 3);
 	edgeBody->setCollisionBitmask(OBSTACLE_COLLISION_BITMASK);
-	edgeBody->setContactTestBitmask(true);
+	edgeBody->setContactTestBitmask(false);
 	auto edgeNode = Node::create();
 	edgeNode->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	edgeNode->setPhysicsBody(edgeBody);
@@ -102,24 +98,9 @@ bool GameScene::init()
 
 	/*----------2.1 PHYSICAL SECTION----------*/
 	/* You can add physical materials to this section(Characters, Pipes etc.) */
-	auto roadBlockSprite = Sprite::create("RoadBlock.png");
-	roadBlockSprite->setAnchorPoint(Vec2(0.0, 0.0));
-	roadBlockSprite->setPosition(Point(0, 90));
-	auto roadBody = PhysicsBody::createBox(roadBlockSprite->getContentSize(), PhysicsMaterial(0, 1, 0));
-
-	roadBody->setDynamic(false);
-	roadBlockSprite->setPhysicsBody(roadBody);
-	this->addChild(roadBlockSprite, 5);
-
-	auto teamPipeSprite = Sprite::create("TeamPipe.png");
-	teamPipeSprite->setAnchorPoint(Vec2(0.0, 0.0));
-	teamPipeSprite->setPosition(Point(1200, 100));
-	auto teamPipeBody = PhysicsBody::createBox(teamPipeSprite->getContentSize(), PhysicsMaterial(0, 1, 0));
-	teamPipeBody->setCollisionBitmask(2);
-	teamPipeBody->setContactTestBitmask(true);
-	teamPipeBody->setDynamic(false);
-	teamPipeSprite->setPhysicsBody(teamPipeBody);
-	moverSprite->addChild(teamPipeSprite, 5);
+	
+	
+	
 
 
 	/////////////////////////////
@@ -129,9 +110,23 @@ bool GameScene::init()
 
 	character = new Character(this);
 
+	roadBlock = new RoadBlock(this);
+
 	teamPipe = new TeamPipe(this);
 
 	cocosPipe = new CocosPipe(this);
+
+	englishPipe = new EnglishPipe(this);
+
+	cleanPipe = new CleanPipe(this);
+
+	unityPipe = new UnityPipe(this);
+
+	csharpPipe = new CsharpPipe(this);
+
+	gamesPipe = new GamesPipe(this);
+
+	cppPipe = new CppPipe(this);
 	
 
 
@@ -148,8 +143,6 @@ bool GameScene::init()
 	this->scheduleUpdate();
 
 
-    /////////////////////////////
-    // 3. add your codes below...
 
     return true;
 }
@@ -162,8 +155,10 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact& contact)
 
 	//Check if the bodies have collided
 
-	if (( 1 == a->getCollisionBitmask() && 2 == b->getCollisionBitmask() ) || (1 == b->getCollisionBitmask() && 2 == a->getCollisionBitmask()))
+	if (( CHARACTER_COLLISION_BITMASK == a->getCollisionBitmask() && PIPE_COLLISION_BITMASK == b->getCollisionBitmask() ) || (CHARACTER_COLLISION_BITMASK == b->getCollisionBitmask() && PIPE_COLLISION_BITMASK == a->getCollisionBitmask()))
 	{
+		auto scene = GameOverScene::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 		CCLOG("CRUSH");
 	}
 
@@ -175,7 +170,8 @@ bool GameScene::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 	
 	character->Fly();
 	this->scheduleOnce(schedule_selector(GameScene::StopFlying), CHAR_FLY_DURATION);
-
+	CCLOG("EVENT BEGAN");
+	
 	return true;
 }
 

@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Character.h"
 #include "TeamPipe.h"
+#include "RoadBlock.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -30,10 +31,17 @@ private:
 	void update(float dt);
 
 	Character* character;
-
+	RoadBlock* roadBlock;
 	TeamPipe* teamPipe;
 
 	CocosPipe* cocosPipe;
+
+	EnglishPipe* englishPipe;
+	CleanPipe* cleanPipe;
+	UnityPipe* unityPipe;
+	CsharpPipe* csharpPipe;
+	GamesPipe* gamesPipe;
+	CppPipe* cppPipe;
 
 	
 

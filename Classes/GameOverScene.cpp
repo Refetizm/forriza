@@ -5,7 +5,16 @@ USING_NS_CC;
 
 Scene* GameOverScene::createScene()
 {
-    return GameOverScene::create();
+	auto scene = Scene::create();
+
+	// 'layer' is an autorelease object
+	auto layer = GameOverScene::create();
+
+	// add layer as a child to scene
+	scene->addChild(layer);
+
+	// return the scene
+	return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -20,7 +29,7 @@ bool GameOverScene::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
+    if ( !Layer::init() )
     {
         return false;
     }

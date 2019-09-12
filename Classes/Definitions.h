@@ -4,9 +4,12 @@
 
 #define DISPLAY_TIME_SPLASH_SCENE 3					// The length of time the scene appears on the screen.
 #define TRANSITION_TIME 1							// The length of time for transition effects.
-#define	OBSTACLE_COLLISION_BITMASK 0x000002
-#define SPRITE_MOVEMENT_SPEED -50
-#define BACKGROUND_MOVEMENT_SPEED -25
+#define	OBSTACLE_COLLISION_BITMASK 0x000001			// 
+#define	PIPE_COLLISION_BITMASK 0x000002				// 
+#define CHARACTER_COLLISION_BITMASK 0x000003		//
+#define	ROAD_COLLISION_BITMASK 0x000004				// 
+#define SPRITE_MOVEMENT_SPEED -200
+#define BACKGROUND_MOVEMENT_SPEED -200
 #define CHAR_FALLING_SPEED 0.0025					// Character falling speed.
 #define CHAR_FLYING_SPEED 0.00375					// Character flying speed.
 #define CHAR_FLY_DURATION 0.25						// Character flight time.
